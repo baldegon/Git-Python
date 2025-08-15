@@ -1,4 +1,4 @@
-# H1
+# 
 
 
 :memo: **Note:** Este es un proyecto que estoy desarrollando para aprender
@@ -6,7 +6,7 @@
 
 -------
 
-## H2 
+## 
 
 
 El proyecto consiste en hacer un cliente de Git con el lenguaje Python 3
