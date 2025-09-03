@@ -86,7 +86,7 @@ def commit(message, author):
                     timestamp,
                     '+' if utc_offset > 0 else '-',
                     abs(utc_offset) // 3600,
-                    (abs(utc_offset) // 60 % 60)
+                    (abs(utc_offset) // 60 % 60))
     lines = ['tree ' + tree]
     if parent:
         lines.append('author {} {}'.format(author, author_time))
@@ -97,33 +97,33 @@ def commit(message, author):
     data = '\n'.join(lines).encode()
     sha1 = hash_object(data, 'commit')
     master_path = os.path.join('.git', 'refs', 'heads', 'master')
-    write_file(master_path, (sha1 + '\n').encode()
-    print('commited to master: {:7}'.format(sha1)
+    write_file(master_path, (sha1 + '\n').encode())
+    print('commited to master: {:7}'.format(sha1))
     return sha1
     
  
 def extract_lines(data):
     """ Extrae una lista de informacion, dada desde el servidor """
-    
-   lines = []
-   i = 0
-   for _ in range(1000):
-       line_length = int(data[i:i + 4], 16)
-       line = data[i + 4:i + line_length]
-       lines.append(line)
-       if line_length == 0:
-           i += 4
-       else:
-           i += line_length
-       if i >= len(data):
-           break
-    return lines
-    
+
+    lines = []
+    i = 0
+    for _ in range(1000):
+        line_length = int(data[i:i + 4], 16)
+        line = data[i + 4:i + line_length]
+        lines.append(line)
+        if line_length == 0:
+            i += 4
+        else:
+            i += line_length
+        if i >= len(data):
+            break
+        return lines
+        
 def build_lines_data(lines):
     """ Construye una cadena de Bytes desde las lineas, para enviarlo hacia el servidor """
     result = []
     for line in lines:
-        result.append('{:04x}'.format(len(line) + 5).encode()
+        result.append('{:04x}'.format(len(line) + 5).encode())
         result.append(line)
         result.append(b'\n')
     result.append(b'0000')
@@ -158,7 +158,7 @@ def get_remote_master_hash(git_url, username, password):
     if lines[2][:40] == b'0' * 40:
         return None
     master_sha1, master_ref = lines[2].split(b'\x00')[0].split()
-    assertt master_ref == b'refs/heads/master'
+    assertt, master_ref == b'refs/heads/master'
     assert len(master_sha1) == 40
     return master_sha1.decode()
     
@@ -241,7 +241,7 @@ def push(git_url, username, password):
     response = http_request(url, username, password, data=data)
     lines = extract_lines(response)
     assert lines[0] == b'unpack ok\n', \
-                        "expected line 1 b'unpack ok', got: {}".format(lines[0])
+        "expected line 1 b'unpack ok', got: {}".format(lines[0])
 
 
 
